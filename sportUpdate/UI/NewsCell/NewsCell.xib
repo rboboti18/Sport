@@ -11,46 +11,51 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="354" id="KGk-i7-Jjw" customClass="NewsCell" customModule="sportUpdate" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="344" height="354"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="261" id="KGk-i7-Jjw" customClass="NewsCell" customModule="sportUpdate" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="394" height="261"/>
+            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="344" height="353.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="394" height="260.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pZL-2p-UkN">
-                        <rect key="frame" x="0.0" y="0.0" width="344" height="168"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pZL-2p-UkN">
+                        <rect key="frame" x="0.0" y="0.0" width="394" height="120"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="394" id="IfB-AS-hFH"/>
+                            <constraint firstAttribute="height" constant="120" id="o9F-hq-TCs"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HbI-b3-kxJ">
-                        <rect key="frame" x="0.0" y="262" width="344" height="87"/>
+                        <rect key="frame" x="0.0" y="180" width="394" height="80"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="87" id="Quo-OW-M8s"/>
+                            <constraint firstAttribute="height" constant="80" id="A1W-jo-kvr"/>
+                            <constraint firstAttribute="width" constant="394" id="YrD-U3-dMx"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f94-Di-ll7">
-                        <rect key="frame" x="0.0" y="175" width="344" height="77"/>
+                        <rect key="frame" x="0.0" y="121" width="394" height="52"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="77" id="0aK-FQ-bEy"/>
+                            <constraint firstAttribute="width" constant="394" id="BNq-d6-zNg"/>
+                            <constraint firstAttribute="height" constant="52" id="mn8-hC-K69"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="pZL-2p-UkN" secondAttribute="trailing" id="3eX-5h-UpE"/>
-                    <constraint firstItem="pZL-2p-UkN" firstAttribute="trailing" secondItem="f94-Di-ll7" secondAttribute="trailing" id="PBE-Th-Lex"/>
-                    <constraint firstItem="pZL-2p-UkN" firstAttribute="leading" secondItem="f94-Di-ll7" secondAttribute="leading" id="RgQ-Zu-mrJ"/>
-                    <constraint firstItem="f94-Di-ll7" firstAttribute="leading" secondItem="HbI-b3-kxJ" secondAttribute="leading" id="Xoc-Zh-VPs"/>
-                    <constraint firstItem="HbI-b3-kxJ" firstAttribute="top" secondItem="f94-Di-ll7" secondAttribute="bottom" constant="10" id="ZXy-CU-sG5"/>
-                    <constraint firstItem="f94-Di-ll7" firstAttribute="top" secondItem="pZL-2p-UkN" secondAttribute="bottom" constant="8" symbolic="YES" id="aqH-3R-Hxz"/>
-                    <constraint firstItem="pZL-2p-UkN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="fhb-ub-ujS"/>
-                    <constraint firstItem="f94-Di-ll7" firstAttribute="trailing" secondItem="HbI-b3-kxJ" secondAttribute="trailing" id="iq2-1u-a1S"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="HbI-b3-kxJ" secondAttribute="bottom" constant="-7" id="oeJ-8e-Cdj"/>
-                    <constraint firstItem="pZL-2p-UkN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="wBd-WN-6ds"/>
+                    <constraint firstAttribute="trailing" secondItem="HbI-b3-kxJ" secondAttribute="trailing" id="Gps-mc-v8q"/>
+                    <constraint firstAttribute="bottom" secondItem="HbI-b3-kxJ" secondAttribute="bottom" constant="0.5" id="HJN-bx-Yjl"/>
+                    <constraint firstAttribute="trailing" secondItem="pZL-2p-UkN" secondAttribute="trailing" id="LE1-Wc-E5Z"/>
+                    <constraint firstItem="f94-Di-ll7" firstAttribute="top" secondItem="pZL-2p-UkN" secondAttribute="bottom" constant="1" id="Y5X-zk-42y"/>
+                    <constraint firstItem="pZL-2p-UkN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="cOK-B5-i3o"/>
+                    <constraint firstItem="HbI-b3-kxJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="gou-00-nxQ"/>
+                    <constraint firstItem="f94-Di-ll7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="uBY-l0-0M8"/>
+                    <constraint firstItem="pZL-2p-UkN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="vN6-bC-5PX"/>
+                    <constraint firstAttribute="trailing" secondItem="f94-Di-ll7" secondAttribute="trailing" id="zOm-SA-3ux"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -59,7 +64,7 @@
                 <outlet property="descriptionLabel" destination="HbI-b3-kxJ" id="hgO-Qw-ccu"/>
                 <outlet property="titleLabel" destination="f94-Di-ll7" id="kdn-eO-40K"/>
             </connections>
-            <point key="canvasLocation" x="78.400000000000006" y="77.361319340329842"/>
+            <point key="canvasLocation" x="152" y="33.733133433283363"/>
         </tableViewCell>
     </objects>
 </document>

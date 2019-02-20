@@ -46,7 +46,6 @@ class NewsListTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -64,10 +63,8 @@ class NewsListTableViewController: UITableViewController {
         let news = presenter.datas[indexPath.row]
         let cell = newsCellMaker(tableView, indexPath, news) 
         
-
         return cell
     }
-
 
 }
 
@@ -80,5 +77,9 @@ extension NewsListTableViewController {
     func next(with news:Article) {
         let args = ["article": news]
         navigationCoordinator!.next(arguments: args) 
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 400
     }
 }
