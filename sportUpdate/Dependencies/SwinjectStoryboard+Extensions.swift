@@ -7,30 +7,33 @@ import SwinjectStoryboard
 //   dependency tree.
 extension SwinjectStoryboard {
     public class func setup() {
+        
         if AppDelegate.dependencyRegistry == nil {
             AppDelegate.dependencyRegistry = DependencyRegistryImpl(container: defaultContainer)
         }
         
-        let dependencyRegistry: DependencyRegistry = AppDelegate.dependencyRegistry
+        let dependencyRegistry:DependencyRegisty = AppDelegate.dependencyRegistry
         
-        func main() {
-            dependencyRegistry.container.storyboardInitCompleted(SpyListViewController.self) { r, vc in
+        func main()
+        {
+            dependencyRegistry.container.storyboardInitCompleted(NewsListTableViewController.self){
+                r, vc in
                 
-                setupData(resolver: r)
+                let coordinator = dependencyRegistry.makeRootNavigationCoordinator(rootViewController: vc)
+                setupData(resolver: r, navigationCoordinator: coordinator)
                 
-                let presenter = r.resolve(SpyListPresenter.self)!
-                
-                //NOTE: We don't have access to the constructor for this VC so we are using method injection
+                let presenter = r.resolve(NewsListPresenter.self)!
                 vc.configure(with: presenter,
-        detailViewControllerMaker: dependencyRegistry.makeDetailViewController,
-                     spyCellMaker: dependencyRegistry.makeSpyCell)
+                             navigationCoordinate: coordinator,
+                             newsCellMaker:dependencyRegistry.makeNewsCell)
             }
         }
         
-        func setupData(resolver r: Resolver) {
-            MockedWebServer.sharedInstance.start()
+        func setupData(resolver r: Resolver, navigationCoordinator: NavigationCoordinator) {
+            AppDelegate.navigationCoordinator = navigationCoordinator
         }
         
         main()
+
     }
 }

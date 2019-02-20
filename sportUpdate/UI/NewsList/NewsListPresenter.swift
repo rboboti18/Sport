@@ -7,3 +7,29 @@
 //
 
 import Foundation
+
+protocol NewsListPresenter {
+    var datas : [Article] { get }
+    func loadDataFromAPI(forURL url: String, completion:@escaping (() -> Void))
+}
+
+class NewsListPresenterImpl : NewsListPresenter {
+    var datas = [Article]()
+    fileprivate var networkLayer : NetworkLayer!
+    
+    init(networkLayer:NetworkLayer) {
+        self.networkLayer = networkLayer
+    }
+}
+
+
+extension NewsListPresenterImpl {
+    func loadDataFromAPI(forURL url: String, completion:@escaping ( () -> Void)) {  
+        
+        self.networkLayer.getSportNews(url: url, completion: { [weak self]
+            datas, error in
+            self?.datas = Array(datas!)
+            completion() 
+        })
+    }
+}

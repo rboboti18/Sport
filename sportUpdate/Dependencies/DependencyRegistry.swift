@@ -2,85 +2,87 @@ import UIKit
 import Swinject
 import SwinjectStoryboard
 
-protocol DependencyRegistry {
-    var container: Container { get }
+protocol DependencyRegisty {
+    var container : Container { get }
+    var navigationCoordinator: NavigationCoordinator! { get }
     
-    typealias SpyCellMaker = (UITableView, IndexPath, SpyDTO) -> SpyCell
-    func makeSpyCell(for tableView: UITableView, at indexPath: IndexPath, spy: SpyDTO) -> SpyCell
+    typealias rootNavigationCoordinator = (UIViewController) -> NavigationCoordinator
+    func makeRootNavigationCoordinator(rootViewController: UIViewController) -> NavigationCoordinator
     
-    typealias DetailViewControllerMaker = (SpyDTO) -> DetailViewController
-    func makeDetailViewController(with spy: SpyDTO) -> DetailViewController
+    typealias NewsCellMaker = (UITableView, IndexPath, Article) -> NewsCell
+    func makeNewsCell(for tableView: UITableView, at indexPath: IndexPath, article: Article) -> NewsCell
     
-    typealias SecretDetailsViewControllerMaker = (SpyDTO, SecretDetailsDelegate)  -> SecretDetailsViewController
-    func makeSecretDetailsViewController(with spy: SpyDTO, delegate: SecretDetailsDelegate) -> SecretDetailsViewController
+    typealias newsViewMaker       = (Article) -> NewsViewController
+    func makeNewsViewMaker(with news:Article) -> NewsViewController
 }
 
-class DependencyRegistryImpl: DependencyRegistry {
 
+class DependencyRegistryImpl: DependencyRegisty {
+     
     var container: Container
-    
-    init(container: Container) {
+    var navigationCoordinator: NavigationCoordinator!
+
+    init(container: Container) { 
         
-        Container.loggingFunction = nil
-        
+        Container.loggingFunction = nil 
         self.container = container
         
         registerDependencies()
         registerPresenters()
-        registerViewControllers()
+        registerViewsControllers()
     }
     
-    func registerDependencies() {
-        
-        container.register(NetworkLayer.self    ) { _ in NetworkLayerImpl()  }.inObjectScope(.container)
-        container.register(DataLayer.self       ) { _ in DataLayerImpl()     }.inObjectScope(.container)
-        container.register(SpyTranslator.self   ) { _ in SpyTranslatorImpl() }.inObjectScope(.container) 
-        
-        container.register(TranslationLayer.self) { r in
-            TranslationLayerImpl(spyTranslator: r.resolve(SpyTranslator.self)!)
+   func registerDependencies()
+   {
+        container.register(NavigationCoordinator.self){
+            (r, rootViewController:UIViewController) in
+            return RootNavigationCoordinatorImpl(with: rootViewController, registry: self)
         }.inObjectScope(.container)
-
-        container.register(ModelLayer.self){ r in
-            ModelLayerImpl(networkLayer: r.resolve(NetworkLayer.self)!,
-                              dataLayer: r.resolve(DataLayer.self)!,
-                       translationLayer: r.resolve(TranslationLayer.self)!)
-        }.inObjectScope(.container)
-    }
+    
+        container.register(NetworkLayer.self){_ in NetworkLayerImpl()
+        }.inObjectScope(.container)  
+   }
     
     func registerPresenters() {
-        container.register(SpyListPresenter.self) { r in SpyListPresenterImpl(modelLayer: r.resolve(ModelLayer.self)!) }
-        container.register( DetailPresenter.self) { (r, spy: SpyDTO)  in DetailPresenterImpl(with: spy) }
-        container.register(SpyCellPresenter.self) { (r, spy: SpyDTO) in SpyCellPresenterImpl(with: spy) }
-        container.register(SecretDetailsPresenter.self) { (r, spy: SpyDTO) in SecretDetailsPresenterImpl(with: spy) }
+        container.register(NewsListPresenter.self) {
+            r in NewsListPresenterImpl(networkLayer: r.resolve(NetworkLayer.self)!)}
+        
+        container.register(NewsCellPresenter.self) {
+            (r, article: Article) in
+            NewsCellPresenterImpl(article: article)
+        }
+        container.register(NewsPresenter.self) {
+            (r, news: Article) in NewsPresenterImpl(with: news)
+        }
     }
     
-    func registerViewControllers() {
-        container.register(SecretDetailsViewController.self) { (r, spy: SpyDTO, delegate: SecretDetailsDelegate) in
-            let presenter = r.resolve(SecretDetailsPresenter.self, argument: spy)!
-            return SecretDetailsViewController(with: presenter, and: delegate)
-        }
-        container.register(DetailViewController.self) { (r, spy:SpyDTO) in
-            let presenter = r.resolve(DetailPresenter.self, argument: spy)!
-
-            //NOTE: We don't have access to the constructor for this VC so we are using method injection
-            let vc = UIStoryboard.main.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-                vc.configure(with: presenter, secretDetailsViewControllerMaker: self.makeSecretDetailsViewController)
-            return vc
+    func registerViewsControllers(){
+        container.register(NewsViewController.self) {
+            (r, news:Article) in
+            let presenter = r.resolve(NewsPresenter.self, argument: news)!
+            let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "NewsViewController") as! NewsViewController 
+            
+            vc.configure(with: presenter, coordinator: self.navigationCoordinator)
+            return vc 
         }
     }
-
-    //MARK: - Maker Methods
-    func makeSpyCell(for tableView: UITableView, at indexPath: IndexPath, spy: SpyDTO) -> SpyCell {
-        let presenter = container.resolve(SpyCellPresenter.self, argument: spy)!
-        let cell = SpyCell.dequeue(from: tableView, for: indexPath, with: presenter)
+    
+    func makeRootNavigationCoordinator(rootViewController: UIViewController) -> NavigationCoordinator {
+        navigationCoordinator = container.resolve(NavigationCoordinator.self, argument: rootViewController)!
+        return navigationCoordinator 
+    }
+    
+    func makeNewsCell(for tableView: UITableView, at indexPath: IndexPath, article: Article) -> NewsCell {
+       
+        let presenter = container.resolve(NewsCellPresenter.self, argument: article)!
+        let cell = NewsCell.dequeue(from: tableView, for: indexPath, with: presenter)
         return cell
     }
     
-    func makeDetailViewController(with spy: SpyDTO) -> DetailViewController {
-        return container.resolve(DetailViewController.self, argument: spy)!
+    func makeNewsViewMaker(with news: Article) -> NewsViewController {
+        return container.resolve(NewsViewController.self, argument: news)!  
     }
-
-    func makeSecretDetailsViewController(with spy: SpyDTO, delegate: SecretDetailsDelegate) -> SecretDetailsViewController {
-        return container.resolve(SecretDetailsViewController.self, arguments: spy, delegate)!
-    }
+    
+    
+   
 }
