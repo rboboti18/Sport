@@ -44,13 +44,16 @@ class NewsViewController: UIViewController {
             contentLabel.text  = content
         }
         
-        OperationQueue.main.addOperation({
-            guard
-                let urlImage = self.newsPresenter.urlToImage
-            else { return }
-            
-            self.loadArticleImage(url: urlImage) 
-        })
+        guard
+            let urlImage = self.newsPresenter.urlToImage
+        else { return }
+        
+        let queue = DispatchQueue(label: "download-image")
+        queue.async {
+            self.loadArticleImage(url: urlImage)
+        }
+        
+        
     }
     
     func loadArticleImage(url:String)

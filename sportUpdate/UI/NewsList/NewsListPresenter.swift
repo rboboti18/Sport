@@ -15,7 +15,7 @@ protocol NewsListPresenter {
 
 class NewsListPresenterImpl : NewsListPresenter {
     var datas = [Article]()
-    fileprivate var networkLayer : NetworkLayer!
+    fileprivate var networkLayer : NetworkLayer! 
     
     init(networkLayer:NetworkLayer) {
         self.networkLayer = networkLayer
@@ -28,7 +28,7 @@ extension NewsListPresenterImpl {
         
         self.networkLayer.getSportNews(url: url, completion: { [weak self]
             datas, error in
-            self?.datas = Array(datas!)
+            self?.datas = Array(datas!) 
             completion() 
         })
     }

@@ -56,7 +56,7 @@ class RootNavigationCoordinatorImpl: NavigationCoordinator {
         let newsViewContoller = registry.makeNewsViewMaker(with: news)
         
         rootViewController.navigationController?.pushViewController(newsViewContoller, animated: true)
-        navState = .atNewsView
+        navState = .atNewsView 
     }
     
    

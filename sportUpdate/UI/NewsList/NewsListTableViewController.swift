@@ -21,7 +21,7 @@ class NewsListTableViewController: UITableViewController {
                    newsCellMaker: @escaping DependencyRegisty.NewsCellMaker)
     {
         self.presenter             = presenter
-        self.navigationCoordinator = navigationCoordinate
+        self.navigationCoordinator = navigationCoordinate 
         self.newsCellMaker         = newsCellMaker 
     }
     
@@ -76,10 +76,10 @@ extension NewsListTableViewController {
     
     func next(with news:Article) {
         let args = ["article": news]
-        navigationCoordinator!.next(arguments: args) 
+        navigationCoordinator!.next(arguments: args)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 400
+        return 300
     }
 }
