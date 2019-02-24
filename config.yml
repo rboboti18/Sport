@@ -1,0 +1,9 @@
+version: 2.1
+
+orbs:
+    sport: circleci/sport-build@0.0.7 # uses the circleci/buildpack-deps Docker image
+
+workflows:
+    "Sport Workflow":
+        jobs:
+          - Sport/Sport-build 
