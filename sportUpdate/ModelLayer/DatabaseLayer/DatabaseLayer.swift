@@ -14,7 +14,7 @@ protocol DatabaseLayer {
     func add(objects:[Object])
     func get(objectType:Object.Type) -> Results<Object>?
     func remove(object:Object)
-    func removeAll(objectType:Object.Type)     
+    func removeAll(objectType:Object.Type)   
 }
 
 class DatabaseLayerImpl: DatabaseLayer {
