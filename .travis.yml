@@ -1,1 +1,4 @@
-language: objective-c
+ language: objective-c
+    osx_image: xcode10
+    xcode_project: sportUpdate.xcodeproj
+    xcode_scheme: sportUpdate
